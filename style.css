@@ -40,7 +40,11 @@ header.bar{
 .bar .logo .glyph{color:var(--saffron);font-size:1.4rem}
 .bar nav a{color:var(--parchment-deep);text-decoration:none;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin-left:26px;font-family:'Space Mono',monospace;opacity:.8;transition:opacity .2s,color .2s}
 .bar nav a:hover{opacity:1;color:var(--saffron)}
-@media(max-width:720px){.bar nav{display:none}}
+@media(max-width:720px){
+  .bar .wrap{flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:12px;row-gap:8px}
+  .bar nav{display:flex;flex-wrap:wrap;width:100%;gap:6px 18px}
+  .bar nav a{margin-left:0;font-size:.74rem}
+}
 
 /* ---- hero ---- */
 .hero{padding:90px 0 70px;position:relative}
