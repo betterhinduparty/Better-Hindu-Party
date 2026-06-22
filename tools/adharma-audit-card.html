@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHP — Reusable Grid Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#11A89B; --teal-deep:#0C7E74;
+    --yellow:#FFE03A; --red:#E63227; --ink:#15201E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#1d1d1d;display:flex;flex-direction:column;align-items:center;gap:18px;
+    padding:26px 14px;font-family:'Patrick Hand',cursive;color:#ddd}
+
+  /* ---------- CONTROLS ---------- */
+  .panel{width:min(560px,96vw);background:#2c2c2c;border-left:3px solid var(--teal);
+    border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:13px}
+  .panel h2{font-family:'Permanent Marker',cursive;color:var(--yellow);font-size:1.1rem}
+  .panel label{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.08em;color:#aaa;display:block;margin-bottom:4px}
+  .panel input[type=text],.panel textarea{width:100%;background:#1d1d1d;border:1.5px solid #555;border-radius:3px;
+    color:#fff;font-family:'Patrick Hand',cursive;font-size:1rem;padding:8px 10px;outline:none;resize:vertical}
+  .panel input:focus,.panel textarea:focus{border-color:var(--teal)}
+  .iconrow{display:flex;gap:6px;flex-wrap:wrap}
+  .iconrow button{background:#1d1d1d;border:1.5px solid #555;color:#ddd;font-size:1.2rem;
+    width:46px;height:42px;border-radius:5px;cursor:pointer;transition:.15s}
+  .iconrow button:hover{border-color:var(--yellow)}
+  .iconrow button.on{border-color:var(--yellow);background:#3a3320}
+  .rowflex{display:flex;gap:12px;flex-wrap:wrap}
+  .rowflex>div{flex:1;min-width:150px}
+  .guard{font-family:'Space Mono',monospace;font-size:.64rem;line-height:1.6;color:#e0b94a;
+    background:#332b14;border-radius:4px;padding:9px 11px;border-left:3px solid var(--yellow)}
+  .guard.warn{color:#ff9c8f;background:#3a1f1c;border-left-color:var(--red)}
+  .hint{font-family:'Space Mono',monospace;font-size:.62rem;color:#777;line-height:1.5}
+
+  /* ---------- THE CARD (the image) ---------- */
+  .card{width:min(560px,96vw);aspect-ratio:1/1;background:var(--teal);
+    border:7px solid var(--red);border-radius:6px;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;box-shadow:0 16px 44px rgba(0,0,0,.5)}
+  .card::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.10) 1.4px,transparent 1.4px);background-size:26px 26px}
+  .star{position:absolute;color:var(--yellow);font-family:'Permanent Marker',cursive;
+    text-shadow:2px 2px 0 var(--red);pointer-events:none;z-index:1}
+
+  .header{padding:28px 28px 4px;text-align:center;position:relative;z-index:2}
+  .kicker{display:inline-block;background:var(--red);color:#fff;font-family:'Space Mono',monospace;
+    font-weight:700;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;
+    transform:rotate(-2deg);margin-bottom:13px}
+  h1{font-family:'Permanent Marker',cursive;color:var(--yellow);font-size:clamp(1.6rem,6.2vw,2.35rem);
+    line-height:.98;text-shadow:3px 3px 0 var(--red),5px 5px 0 rgba(0,0,0,.16);transform:rotate(-.6deg)}
+
+  /* big icon doodle in the middle */
+  .stage{flex:1;position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:6px 18px}
+  .glyph{font-size:clamp(5rem,26vw,9rem);line-height:1;filter:drop-shadow(4px 4px 0 var(--red))}
+  .subline{position:absolute;bottom:9%;left:50%;transform:translateX(-50%);
+    font-family:'Patrick Hand',cursive;color:var(--ink);background:var(--yellow);
+    border:2.5px solid var(--red);padding:4px 14px;font-size:1rem;border-radius:4px;
+    max-width:84%;text-align:center;line-height:1.2}
+
+  .footer{position:relative;z-index:2;background:var(--red);padding:13px 22px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .footer .name{font-family:'Permanent Marker',cursive;color:var(--yellow);font-size:1.1rem;line-height:1}
+  .footer .tag{font-family:'Space Mono',monospace;color:#fff;font-size:.58rem;letter-spacing:.1em;text-align:right;line-height:1.4}
+  .footer .handle{color:var(--yellow)}
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <h2>🧩 Blank grid panel — fill & screenshot</h2>
+
+  <div>
+    <label>KICKER (the audit series + number)</label>
+    <input type="text" id="in-kick" value="The Adharma Audit · No. 04" oninput="sync()">
+  </div>
+  <div>
+    <label>HEADLINE (the punchline — keep it a role, not a name)</label>
+    <input type="text" id="in-head" value="THEY PROMISED ROADS. WE GOT POTHOLE TOURISM." oninput="sync()">
+  </div>
+  <div>
+    <label>CENTRAL DOODLE</label>
+    <div class="iconrow" id="icons"></div>
+  </div>
+  <div>
+    <label>SUB-LABEL (yellow box — optional gag tag)</label>
+    <input type="text" id="in-sub" value="now featuring: free suspension damage 🕳️" oninput="sync()">
+  </div>
+  <div class="rowflex">
+    <div>
+      <label>FOOTER TAGLINE</label>
+      <input type="text" id="in-tag" value="WE AUDIT THE FINE PRINT" oninput="sync()">
+    </div>
+  </div>
+
+  <div class="guard" id="guard">✦ Keep the headline aimed at the <b>role or the system</b> ("a minister," "the board," "corporate trusts") — that's what keeps it satire. The card auto-appends "satire · not a real party" so the frame always reads as comedy.</div>
+  <div class="hint">// teal–yellow–red locked · everything above is controls, only the card below is the image · screenshot it.</div>
+</div>
+
+<div class="card">
+  <span class="star" style="top:100px;left:16px;font-size:18px">✦</span>
+  <span class="star" style="bottom:130px;right:20px;font-size:15px">✱</span>
+  <span class="star" style="top:140px;right:30px;font-size:12px">✦</span>
+
+  <div class="header">
+    <span class="kicker" id="out-kick">The Adharma Audit · No. 04</span>
+    <h1 id="out-head">THEY PROMISED ROADS. WE GOT POTHOLE TOURISM.</h1>
+  </div>
+
+  <div class="stage">
+    <div class="glyph" id="out-glyph">🕳️</div>
+    <div class="subline" id="out-sub">now featuring: free suspension damage 🕳️</div>
+  </div>
+
+  <div class="footer">
+    <span class="name">BETTER HINDU PARTY</span>
+    <span class="tag"><span id="out-tag">WE AUDIT THE FINE PRINT</span><br><span class="handle">satire · not a real party</span></span>
+  </div>
+</div>
+
+<script>
+  // a small library of on-brand doodle emojis to drop in the center
+  const ICONS = ["🕳️","🏭","📺","🧼","📜","💸","⚖️","🪔","🚧","🏛️","📉","🧾","🎭","🤝","🔦","🪙"];
+  const iconWrap = document.getElementById('icons');
+  let current = "🕳️";
+  ICONS.forEach(ic=>{
+    const b=document.createElement('button');
+    b.textContent=ic; if(ic===current) b.classList.add('on');
+    b.onclick=()=>{current=ic;[...iconWrap.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');sync();};
+    iconWrap.appendChild(b);
+  });
+
+  // a tiny nudge: flag if the headline looks like it contains a proper name (very rough heuristic)
+  function looksLikeName(s){
+    // crude: a capitalized word that isn't the whole-caps headline style and isn't a common role word
+    const roleWords = /\b(MINISTER|MLA|MP|BOARD|TRUST|GOVT|GOVERNMENT|STATE|ANCHOR|PARTY|CABINET|OFFICIAL|BUREAUCRAT|LEADER|CORPORATE)\b/i;
+    return false; // headlines are all-caps by design; we keep the guard advisory rather than blocking
+  }
+
+  function sync(){
+    const kick=document.getElementById('in-kick').value||' ';
+    const head=(document.getElementById('in-head').value||' ').toUpperCase();
+    const sub=document.getElementById('in-sub').value;
+    const tag=(document.getElementById('in-tag').value||' ').toUpperCase();
+    document.getElementById('out-kick').textContent=kick;
+    document.getElementById('out-head').textContent=head;
+    document.getElementById('out-glyph').textContent=current;
+    document.getElementById('out-tag').textContent=tag;
+    const sb=document.getElementById('out-sub');
+    if(sub.trim()){sb.style.display='inline-block';sb.textContent=sub;}else{sb.style.display='none';}
+  }
+  sync();
+</script>
+</body>
+</html>
