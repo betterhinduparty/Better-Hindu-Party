@@ -7,16 +7,33 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://docs.google.com">
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Spectral:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Spectral:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&family=Patrick+Hand&family=Permanent+Marker&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bhp-mark" viewBox="0 0 200 200">
+    <rect width="200" height="200" fill="#11A89B"/>
+    <g stroke="#FFE03A" stroke-width="5" stroke-linecap="round">
+      <path d="M100 44 v-22"/><path d="M64 54 l-14 -16"/><path d="M136 54 l14 -16"/>
+      <path d="M52 86 l-22 -6"/><path d="M148 86 l22 -6"/></g>
+    <g stroke="#E63227" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M100 58 C 90 74, 92 88, 100 96 C 108 88, 110 74, 100 58 Z" fill="#FFE03A"/>
+      <path d="M54 108 C 60 138, 140 138, 146 108 C 130 118, 70 118, 54 108 Z" fill="#FFE03A"/>
+      <path d="M54 108 C 78 116, 122 116, 146 108" stroke-width="4" fill="none"/>
+      <path d="M82 136 q18 8 36 0" stroke-width="4" fill="none"/></g>
+    <g stroke="#FFE03A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M150 150 l12 14 l24 -32"/></g>
+  </symbol>
+</svg>
 
 <header class="bar">
   <div class="wrap">
     <div class="logo"><span class="glyph">卐̶</span>BETTER&nbsp;HINDU&nbsp;PARTY</div>
     <nav>
       <a href="#manifesto">Manifesto</a>
+      <a href="#meter">Meter</a>
       <a href="#join">Join</a>
       <a href="#suggest">Suggest</a>
       <a href="press/viswakarma-exam-leak.html">Press</a>
@@ -86,6 +103,55 @@
   </div>
 </section>
 
+<section id="meter">
+  <div class="wrap">
+    <div class="eyebrow">Rapid Response</div>
+    <h2 class="sec">The <span class="it">Adharma Meter.</span></h2>
+    <p class="sec-intro">Same dial, new headline. Every politician gets the same instrument — no gods on this gauge, only the people who claim to speak for them.</p>
+
+    <div class="ameter-card" aria-live="polite">
+      <span class="ameter-star" style="top:18px;left:14px">✦</span>
+      <span class="ameter-star" style="bottom:26px;right:16px">✱</span>
+
+      <div class="ameter-top">
+        <div class="ameter-badge"><svg viewBox="0 0 200 200" width="40" height="40"><use href="#bhp-mark"/></svg></div>
+        <div class="ameter-lbl"><b>ADHARMA METER</b>RAPID RESPONSE · BHP</div>
+        <div class="ameter-live">● LIVE</div>
+      </div>
+
+      <div class="ameter-headline-wrap"><h3 id="ameter-headline">MLA JUMPS SHIP</h3></div>
+
+      <div class="ameter-gauge-wrap">
+        <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke-linecap="round" stroke-width="22">
+            <path d="M40 150 A110 110 0 0 1 96 58" stroke="#3FBF6F"/>
+            <path d="M96 58 A110 110 0 0 1 204 58" stroke="#FFE03A"/>
+            <path d="M204 58 A110 110 0 0 1 260 150" stroke="#E63227"/>
+          </g>
+          <path d="M40 150 A110 110 0 0 1 260 150" fill="none" stroke="#15201E" stroke-width="2.5" stroke-dasharray="2 14" opacity=".5"/>
+          <text x="34" y="172" font-family="'Space Mono'" font-size="11" fill="#fff">DHARMA</text>
+          <text x="226" y="172" font-family="'Space Mono'" font-size="11" fill="#fff">ADHARMA</text>
+          <g id="ameter-needle" class="ameter-needle">
+            <path d="M150 150 L150 52" stroke="#15201E" stroke-width="7" stroke-linecap="round"/>
+            <path d="M150 52 l-8 14 l16 0 Z" fill="#15201E"/>
+          </g>
+          <circle cx="150" cy="150" r="14" fill="#FFE03A" stroke="#E63227" stroke-width="4"/>
+          <circle cx="150" cy="150" r="3" fill="#E63227"/>
+        </svg>
+      </div>
+
+      <div class="ameter-verdict-wrap"><span class="ameter-verdict" id="ameter-verdict">PEAK ADHARMA</span></div>
+
+      <div class="ameter-caption"><p id="ameter-caption">The purification washing machine has run out of detergent.</p></div>
+
+      <div class="ameter-foot">
+        <div class="ameter-foot-n">BHP</div>
+        <div class="ameter-foot-t">DHARMA OVER DEAL-MAKING · satire<br>#IsThisTheDharma #AdharmaMeter</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="join">
   <div class="wrap">
     <div class="eyebrow">Membership</div>
@@ -136,5 +202,34 @@
   </div>
 </footer>
 
+<script>
+  var ameterEntries = [
+    { headline:"MLA JUMPS SHIP", caption:"The purification washing machine has run out of detergent.", needle:88, verdict:"PEAK ADHARMA" },
+    { headline:"EXAM PAPER LEAKS, AGAIN", caption:"Telegram delivered the answer key before the admit card.", needle:96, verdict:"OFF THE CHARTS" },
+    { headline:"CORPORATE LOAN QUIETLY WAIVED", caption:"Funds for friends, found in zero seconds flat.", needle:84, verdict:"PEAK ADHARMA" },
+    { headline:"“SMART CITY” UPDATE", caption:"Still just a pothole. Now with a hashtag.", needle:52, verdict:"MILD ADHARMA" },
+    { headline:"PRIMETIME PANEL TURNS SHOUTING MATCH", caption:"Eight panelists, zero facts, one decibel record broken.", needle:70, verdict:"PEAK ADHARMA" }
+  ];
+  (function(){
+    var i = 0;
+    var headlineEl = document.getElementById('ameter-headline');
+    var captionEl = document.getElementById('ameter-caption');
+    var verdictEl = document.getElementById('ameter-verdict');
+    var needleEl = document.getElementById('ameter-needle');
+    if (!headlineEl) return;
+    function render(entry){
+      headlineEl.textContent = entry.headline;
+      captionEl.textContent = entry.caption;
+      verdictEl.textContent = entry.verdict;
+      var deg = (entry.needle / 100) * 180 - 90;
+      needleEl.style.transform = 'rotate(' + deg + 'deg)';
+    }
+    render(ameterEntries[0]);
+    setInterval(function(){
+      i = (i + 1) % ameterEntries.length;
+      render(ameterEntries[i]);
+    }, 4500);
+  })();
+</script>
 </body>
 </html>
