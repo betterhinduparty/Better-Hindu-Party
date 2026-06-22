@@ -117,59 +117,10 @@
   <div class="wrap">
     <div class="eyebrow">Crowdsourcing the Satire</div>
     <h2 class="sec">Tell us which failure <span class="it">drives you maddest.</span></h2>
-    <p class="sec-intro">A mock intake form. Nothing is stored, nothing is sent — it's a prop. (Want the real thing? The exact field structure is yours to paste into Google Forms; just ask.)</p>
+    <p class="sec-intro">A real intake form. Submissions go to a spreadsheet only the BHP Central Committee can see — which is to say, the satire account that made this site.</p>
 
-    <div class="form-card">
-      <div class="form-head">
-        <div class="t">BHP Public Suggestions</div>
-        <div class="s">Citizen Intake · Form 1 of ∞</div>
-      </div>
-
-      <div class="field">
-        <label>Full Name <span class="req">*</span></label>
-        <div class="ctx">Use your real name — unless you're an active politician planning to defect secretly.</div>
-        <input type="text" placeholder="Your name">
-      </div>
-
-      <div class="field">
-        <label>Current Ideological Alignment</label>
-        <div class="ctx">Pick the one that stings most.</div>
-        <div class="opt" onclick="pick(this)"><span class="dot"></span>Hyper-Nationalist</div>
-        <div class="opt" onclick="pick(this)"><span class="dot"></span>Frustrated Middle Class</div>
-        <div class="opt" onclick="pick(this)"><span class="dot"></span>Chronically Unemployed Graduate</div>
-        <div class="opt" onclick="pick(this)"><span class="dot"></span>Just here for the memes</div>
-      </div>
-
-      <div class="field">
-        <label>Which current policy is the most <em>Adharmic</em>?</label>
-        <div class="ctx">Exam leaks, inflation, corporate cronyism — name your villain.</div>
-        <textarea placeholder="The thing that keeps you up at night..."></textarea>
-      </div>
-
-      <div class="field">
-        <label>Suggest a Satirical Punishing Law</label>
-        <div class="ctx">What's the penalty for an MP who switches parties for money?</div>
-        <textarea placeholder="Make it poetic..."></textarea>
-      </div>
-
-      <div class="field">
-        <label>Willingness to sacrifice personal wealth</label>
-        <div class="ctx">Be honest. We'll know.</div>
-        <div class="scale">
-          <div class="pt" onclick="pickScale(this)">1</div>
-          <div class="pt" onclick="pickScale(this)">2</div>
-          <div class="pt" onclick="pickScale(this)">3</div>
-          <div class="pt" onclick="pickScale(this)">4</div>
-          <div class="pt" onclick="pickScale(this)">5</div>
-        </div>
-        <div class="scale-ends"><span>1 · “I want a government contract”</span><span>5 · “I'll live on public transport”</span></div>
-      </div>
-
-      <div class="form-foot">
-        <button class="submit" onclick="document.getElementById('ack').classList.add('show')">Submit to the Cause</button>
-        <div class="form-note">// no data leaves this page. it's satire all the way down.</div>
-        <div class="ack" id="ack">Received in spirit. Your <em>Dharma</em> has been noted by absolutely no database whatsoever. 🚩</div>
-      </div>
+    <div class="form-embed">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfyFNQNjjplRVH7UDsVZSaoAbIL-JJ1uyaWa2Fg4Z0YqCcOVg/viewform?embedded=true" loading="lazy">Loading…</iframe>
     </div>
   </div>
 </section>
@@ -184,15 +135,5 @@
   </div>
 </footer>
 
-<script>
-  function pick(el){
-    [...el.parentElement.querySelectorAll('.opt')].forEach(o=>o.classList.remove('sel'));
-    el.classList.add('sel');
-  }
-  function pickScale(el){
-    [...el.parentElement.querySelectorAll('.pt')].forEach(o=>o.classList.remove('sel'));
-    el.classList.add('sel');
-  }
-</script>
 </body>
 </html>
