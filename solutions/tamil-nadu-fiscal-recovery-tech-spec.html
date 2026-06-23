@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHP Engineering Appendix — The Five Systems Behind the Tamil Nadu Fiscal Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Spectral:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="../index.html"><span class="glyph">卐̶</span>BETTER&nbsp;HINDU&nbsp;PARTY</a>
+    <nav>
+      <a href="../index.html#manifesto">Manifesto</a>
+      <a href="../index.html#join">Join</a>
+      <a href="../index.html#suggest">Suggest</a>
+      <a href="index.html">Solutions</a>
+      <a href="../press/viswakarma-exam-leak.html">Press</a>
+    </nav>
+  </div>
+</header>
+
+<section class="press">
+  <div class="wrap">
+    <div class="press-meta">BHP Policy Vault &middot; Annex A to White Paper No. 01 &middot; June 23, 2026 &middot; Chennai</div>
+    <div class="eyebrow">BHP Solutions Desk &middot; Engineering Appendix</div>
+    <h1>The Five Systems Behind the Tamil Nadu Fiscal Plan</h1>
+    <p class="dek">To eliminate systemic leakages, enforce fiscal discipline, and clean data registries effectively, the state mechanism needs production-ready data architectures, not just policy intent. Five structures do the heavy lifting: <strong>Merkle Trees</strong> for tamper detection, <strong>Directed Acyclic Graphs</strong> for procurement tracking, <strong>Bloom Filters</strong> and <strong>hash maps</strong> for evasion matching, an <strong>inverted index</strong> for registry cleansing, and a <strong>min-heap</strong> for enforcement routing.</p>
+
+    <article>
+      <p>Each system below maps directly onto a checklist item from <a href="tamil-nadu-fiscal-recovery.html">White Paper No. 01</a>. The code is reference logic, not production code &mdash; it shows the shape of the algorithm a real implementation would need.</p>
+    </article>
+
+    <div class="demand">
+      <span class="stage-window">Stage 1 &middot; Lock all new debt to capital expenditure</span>
+      <h3>System 01: Capital Expenditure Ring-Fencing System</h3>
+      <p class="layer">Optimal data structure: <strong>Directed Acyclic Graph (DAG) + In-Memory Ledger Cache</strong></p>
+      <p class="why">Projects have complex tree structures &mdash; an expressway project has child nodes like land acquisition, utility shifting, and paving. A DAG tracks topological dependencies and prevents cyclical funding loops.</p>
+      <p class="layer">Algorithm: <strong>Topological Sort Validation with Fiscal Guardrails</strong></p>
+      <pre class="codeblock"><code>import time
+
+class ProjectNode:
+    def __init__(self, project_id, budget_required, multiplier_score):
+        self.project_id = project_id
+        self.budget_required = budget_required
+        self.multiplier_score = multiplier_score
+        self.allocated_funds = 0
+        self.dependencies = []  # List of child ProjectNodes
+        self.status = &quot;PENDING&quot; # PENDING, APPROVED, DEFICIT_LOCKED
+
+class CapExGatekeeper:
+    def __init__(self):
+        self.project_dag = {}  # Project_ID -&gt; ProjectNode
+
+    def add_project(self, node):
+        self.project_dag[node.project_id] = node
+
+    def intercept_borrowing_tranche(self, tranche_amount, designation):
+        &quot;&quot;&quot;
+        Ensures 100% of fresh borrowing bypasses general revenue account
+        and maps directly to high-multiplier nodes.
+        &quot;&quot;&quot;
+        # Strict structural block: Immediate rejection if designated for consumption support
+        if designation == &quot;GENERAL_REVENUE_SUPPORT&quot; or designation == &quot;REVENUE_DEFICIT_BAILOUT&quot;:
+            return {&quot;status&quot;: &quot;REJECTED&quot;, &quot;code&quot;: &quot;403_FISCAL_RESTRAINT&quot;, &quot;action&quot;: &quot;Freeze Tranche&quot;}
+
+        allocated_log = []
+        remaining_funds = tranche_amount
+
+        # Evaluate and sort projects based on multiplier returns and dependency readiness
+        for pid, node in sorted(self.project_dag.items(), key=lambda x: x[1].multiplier_score, reverse=True):
+            if remaining_funds &lt;= 0:
+                break
+
+            if node.status == &quot;PENDING&quot; and node.multiplier_score &gt;= 1.5:
+                # Check if all child structural prerequisites are cleared
+                if all(dep.status == &quot;COMPLETED&quot; for dep in node.dependencies):
+                    funds_to_give = min(remaining_funds, node.budget_required - node.allocated_funds)
+                    node.allocated_funds += funds_to_give
+                    remaining_funds -= funds_to_give
+
+                    if node.allocated_funds == node.budget_required:
+                        node.status = &quot;APPROVED&quot;
+
+                    allocated_log.append({&quot;project_id&quot;: pid, &quot;allocated&quot;: funds_to_give})
+
+        # Escrow fallback protection if funds cannot be matched to a ready CapEx project
+        if remaining_funds &gt; 0:
+            self._move_to_escrow(remaining_funds)
+            allocated_log.append({&quot;project_id&quot;: &quot;ESCROW_VAULT&quot;, &quot;allocated&quot;: remaining_funds})
+
+        return {&quot;status&quot;: &quot;SUCCESS&quot;, &quot;allocations&quot;: allocated_log}
+
+    def _move_to_escrow(self, amount):
+        print(f&quot;[SECURITY LATCH] Programmatically parked INR {amount} Cr in Capital Escrow Reserve Vault.&quot;)
+</code></pre>
+    </div>
+
+    <div class="demand">
+      <span class="stage-window">Stage 1 &middot; Deploy AI audit tools for commercial taxes</span>
+      <h3>System 02: AI-Driven GST Invoice &amp; Tax Evasion Matcher</h3>
+      <p class="layer">Optimal data structure: <strong>Hash Map (Adjacency List Structure) + Bloom Filter</strong></p>
+      <p class="why">A Bloom Filter performs lightning-fast, space-efficient membership tests against known shell-network GSTINs. A Hash Map allows O(1) cross-matching between sales rows and transit records.</p>
+      <p class="layer">Algorithm: <strong>Multi-Stream Variance Triangulation</strong></p>
+      <pre class="codeblock"><code>class TaxpayerRecord:
+    def __init__(self, gstin, sales_gstr1, itc_gstr2b):
+        self.gstin = gstin
+        self.sales_gstr1 = sales_gstr1  # Total values declared sold
+        self.itc_gstr2b = itc_gstr2b    # Input Tax Credit claimed
+        self.eway_bills = []            # Log of physical transport values
+
+class GSTEvasionMatcher:
+    def __init__(self):
+        self.taxpayer_registry = {} # GSTIN -&gt; TaxpayerRecord
+        self.shell_network_bloom_filter = set() # Simulating rapid membership filter
+
+    def ingest_records(self, record):
+        self.taxpayer_registry[record.gstin] = record
+
+    def cross_match_and_flag(self, gstin):
+        if gstin not in self.taxpayer_registry:
+            return None
+
+        record = self.taxpayer_registry[gstin]
+        total_physical_cargo = sum(bill[&#x27;value&#x27;] for bill in record.eway_bills)
+
+        # Rule 1: Phantom Input Tax Credit (ITC) Check
+        # Shell networks claim massive ITC without matching corresponding sales revenue
+        if record.itc_gstr2b &gt; record.sales_gstr1:
+            return {&quot;gstin&quot;: gstin, &quot;risk&quot;: &quot;CRITICAL&quot;, &quot;reason&quot;: &quot;Phantom ITC claims exceeding sales margin&quot;}
+
+        # Rule 2: Logistics Variance Detection
+        # Catches under-reported book entries compared to physical goods moved out of state
+        if record.sales_gstr1 &gt; 0:
+            variance = abs(record.sales_gstr1 - total_physical_cargo) / record.sales_gstr1
+            if variance &gt; 0.15: # 15% strict threshold allowance
+                return {
+                    &quot;gstin&quot;: gstin,
+                    &quot;risk&quot;: &quot;HIGH&quot;,
+                    &quot;reason&quot;: f&quot;Logistics mismatch. Variance of {variance:.2%} between physical transport and GSTR1&quot;,
+                    &quot;unreported_est&quot;: abs(record.sales_gstr1 - total_physical_cargo)
+                }
+
+        return {&quot;gstin&quot;: gstin, &quot;risk&quot;: &quot;LOW&quot;, &quot;reason&quot;: &quot;Compliance Verified&quot;}
+</code></pre>
+    </div>
+
+    <div class="demand">
+      <span class="stage-window">Stage 2 &middot; Overhaul the power sector</span>
+      <h3>System 03: TNEB Smart-Meter Consumption &amp; Theft Balancer</h3>
+      <p class="layer">Optimal data structure: <strong>Merkle Tree (Hash Tree) + Adjacency List (Grid Nodes)</strong></p>
+      <p class="why">Smart-meter readings change by the minute. Mapping meters as leaf nodes of a Merkle Tree under a regional feeder root means any tampering or unauthorized line draw changes the parent hash instantly, pinpointing the location.</p>
+      <p class="layer">Algorithm: <strong>Node-Balanced Energy Telemetry Comparison</strong></p>
+      <pre class="codeblock"><code>import hashlib
+
+class EnergyGridNode:
+    def __init__(self, line_id, type=&quot;LEAF_METER&quot;):
+        self.line_id = line_id
+        self.type = type # FEEDER or LEAF_METER
+        self.current_kwh = 0.0
+        self.hash_val = self.compute_hash()
+
+    def compute_hash(self):
+        data_str = f&quot;{self.line_id}:{self.current_kwh}&quot;
+        return hashlib.sha256(data_str.encode()).hexdigest()
+
+class GridBalancer:
+    def audit_feeder_segment(self, feeder_output, meters_list):
+        &quot;&quot;&quot;
+        Balances electricity dispatched against downstream point consumption.
+        &quot;&quot;&quot;
+        total_metered_consumption = sum(meter.current_kwh for meter in meters_list)
+
+        # Calculate systemic loss variance
+        total_loss = feeder_output - total_metered_consumption
+        allowable_technical_resistance = feeder_output * 0.05 # 5% baseline heat loss
+
+        if total_loss &gt; allowable_technical_resistance:
+            unauthorized_leakage = total_loss - allowable_technical_resistance
+            # Target the parent sector hash that failed structural verification
+            tampered_nodes = [m.line_id for m in meters_list if m.hash_val != m.compute_hash()]
+
+            return {
+                &quot;telemetry_status&quot;: &quot;CORRUPT_LEAKAGE_DETECTED&quot;,
+                &quot;loss_magnitude_kwh&quot;: unauthorized_leakage,
+                &quot;flagged_tampered_meters&quot;: tampered_nodes,
+                &quot;action&quot;: &quot;Dispatch Field Enforcement Audit Unit&quot;
+            }
+
+        return {&quot;telemetry_status&quot;: &quot;BALANCED&quot;, &quot;loss_magnitude_kwh&quot;: total_loss}
+</code></pre>
+    </div>
+
+    <div class="demand">
+      <span class="stage-window">Stage 1 &middot; Pause and clean welfare scheme registries</span>
+      <h3>System 04: Welfare Scheme Data-Cleansing Pipeline</h3>
+      <p class="layer">Optimal data structure: <strong>Inverted Index (cross-referenced via encrypted national ID hash keys)</strong></p>
+      <p class="why">Cleaning multi-million-record welfare registries without processing lag requires database fields linked through an inverted multi-attribute index map.</p>
+      <p class="layer">Algorithm: <strong>Multi-Layer Exclusion Filtering</strong></p>
+      <pre class="codeblock"><code>class DemographicsFilter:
+    def __init__(self, death_registry, tax_registry, land_registry):
+        self.death_registry = death_registry   # Set of hashed IDs of deceased persons
+        self.tax_registry = tax_registry       # Set of active tax-paying hashed IDs
+        self.land_registry = land_registry     # Dict: Hashed ID -&gt; Land acreage holding
+
+    def clean_beneficiary_pool(self, active_beneficiary_list):
+        pruned_registry = []
+        disqualified_registry = []
+
+        for citizen in active_beneficiary_list:
+            c_hash = citizen[&#x27;id_hash&#x27;]
+
+            # Step 1: Deceased Account Latch
+            if c_hash in self.death_registry:
+                disqualified_registry.append({&quot;id&quot;: c_hash, &quot;reason&quot;: &quot;Deceased Status Detected&quot;})
+                continue
+
+            # Step 2: Affluence Check via Income Tax filing status
+            if c_hash in self.tax_registry:
+                disqualified_registry.append({&quot;id&quot;: c_hash, &quot;reason&quot;: &quot;Affluence Exclusion: Formal Taxpayer&quot;})
+                continue
+
+            # Step 3: Affluence Check via Asset Registry (Land ownership capping)
+            land_size = self.land_registry.get(c_hash, 0.0)
+            if land_size &gt; 5.0: # 5 acres cap threshold
+                disqualified_registry.append({&quot;id&quot;: c_hash, &quot;reason&quot;: f&quot;Affluence Exclusion: Landholding {land_size} Acres&quot;})
+                continue
+
+            # Account matches low-income metric definitions, safe for transfer pipelines
+            pruned_registry.append(citizen)
+
+        return pruned_registry, disqualified_registry
+</code></pre>
+    </div>
+
+    <div class="demand">
+      <span class="stage-window">Stage 3 &middot; Digitize the mining sector</span>
+      <h3>System 05: Automated Minor Mineral Royalty Tracker</h3>
+      <p class="layer">Optimal data structure: <strong>Priority Queue (Min-Heap / Max-Heap)</strong></p>
+      <p class="why">Automated weighbridge checkpoints feed continuous vehicle data. A max-heap dynamically ranks the highest-weight violations in real time, matching limited regional patrol squads to the worst evaders first.</p>
+      <p class="layer">Algorithm: <strong>Dynamic Weighbridge Overload Verification</strong></p>
+      <pre class="codeblock"><code>import heapq
+
+class VehicleEnforcementQueue:
+    def __init__(self):
+        self.high_risk_queue = [] # Max-Heap implemented via negative prioritization
+
+    def process_checkpoint(self, license_plate, measured_weight, active_permit):
+        if not active_permit:
+            # Immediate vehicle seizure protocol if tracking pass is missing
+            self._trigger_seizure(license_plate, reason=&quot;Zero Transit Permit Found&quot;)
+            return
+
+        declared_limit = active_permit[&#x27;declared_weight&#x27;]
+
+        if measured_weight &gt; declared_limit:
+            overload_delta = measured_weight - declared_limit
+            penalty_charge = overload_delta * 5000  # Statutory scaling fine per metric ton
+
+            # Push to priority queue for interception (higher overload = higher priority)
+            heapq.heappush(self.high_risk_queue, (-overload_delta, {
+                &quot;plate&quot;: license_plate,
+                &quot;fine&quot;: penalty_charge,
+                &quot;quarry_id&quot;: active_permit[&#x27;quarry_id&#x27;]
+            }))
+
+    def _trigger_seizure(self, license_plate, reason):
+        print(f&quot;[SEIZURE INTERCEPT] Triggered lockdown dispatch for vehicle: {license_plate}. Reason: {reason}&quot;)
+
+    def fetch_highest_priority_evaders(self, squad_count):
+        targets = []
+        for _ in range(min(squad_count, len(self.high_risk_queue))):
+            targets.append(heapq.heappop(self.high_risk_queue)[1])
+        return targets
+</code></pre>
+    </div>
+
+    <div class="eyebrow" style="margin-top:50px">Structural Performance Matrix</div>
+    <table class="matrix">
+      <thead>
+        <tr><th>System</th><th>Primary data layer</th><th>Time complexity</th><th>Operational target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. CapEx Gatekeeper</strong></td><td>Directed Acyclic Graph</td><td>O(V + E) topological sort</td><td>Eradicate structural consumption borrowing</td></tr>
+        <tr><td><strong>2. Tax Evasion Matcher</strong></td><td>Hash Map + Bloom Filter</td><td>O(1) average lookup</td><td>Push SOTR-to-GSDP ratio past 6.0%</td></tr>
+        <tr><td><strong>3. Power Grid Balancer</strong></td><td>Merkle Hash Tree</td><td>O(log N) validation path</td><td>Cut distribution losses below 5%</td></tr>
+        <tr><td><strong>4. Welfare Scheme Filter</strong></td><td>Inverted Index</td><td>O(1) search per record</td><td>Reclaim redundant beneficiary overhead</td></tr>
+        <tr><td><strong>5. Mineral Transit Tracker</strong></td><td>Binary Min/Max-Heap</td><td>O(log N) per operation</td><td>Reverse non-tax mining revenue stagnation</td></tr>
+      </tbody>
+    </table>
+
+    <div class="press-contact">
+      Filed under: BHP Policy Vault &mdash; Annex A to White Paper No. 01<br>
+      <a href="tamil-nadu-fiscal-recovery.html">&larr; Back to the 180-Day Recovery Plan</a><br>
+      <a href="index.html">&larr; Back to the Solutions Desk</a>
+    </div>
+
+    <div class="disclaimer" style="margin-top:40px">&#9888; SATIRE-ADJACENT POLICY DESK. Reference pseudocode only &mdash; not audited, not production-hardened, not a substitute for an actual engineering team. The BHP is not a registered party and fields no candidates, but the algorithms are free to steal.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">Better Hindu Party</div>
+      <div class="mono" style="font-size:.72rem;letter-spacing:.1em;margin-top:6px">Dharma over deal-making.</div>
+    </div>
+    <div class="fine">A work of satire and political comedy. No real party, no candidates, no donations, no affiliation with any organisation. All resemblance to actual policy hypocrisy is entirely the point.</div>
+  </div>
+</footer>
+
+</body>
+</html>
