@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHP Annex — The Decentralized Waste Logistics Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Spectral:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="../index.html"><span class="glyph">卐̶</span>BETTER&nbsp;HINDU&nbsp;PARTY</a>
+    <nav>
+      <a href="../index.html#manifesto">Manifesto</a>
+      <a href="../index.html#join">Join</a>
+      <a href="../index.html#suggest">Suggest</a>
+      <a href="index.html">Solutions</a>
+      <a href="../press/viswakarma-exam-leak.html">Press</a>
+    </nav>
+  </div>
+</header>
+
+<section class="press">
+  <div class="wrap">
+    <div class="press-meta">BHP Policy Vault &middot; Annex A to White Paper No. 04 &middot; June 23, 2026 &middot; New Delhi</div>
+    <div class="eyebrow">BHP Solutions Desk &middot; Engineering Appendix</div>
+    <h1>The Decentralized Waste Logistics Engine</h1>
+    <p class="dek">The three tiers in <a href="zero-landfill-waste-engine.html">White Paper No. 04</a> only hold together if one system tracks every household's RFID-tagged bin, routes trucks to the bins that actually need emptying, and applies the Pay-As-You-Throw penalty or reward automatically. Below is that system's reference shape, plus the processing economics that turn the back end into a revenue stream instead of a cost center.</p>
+
+    <div class="demand">
+      <h3>System: Decentralized Collection Logistics Engine</h3>
+      <p class="layer">Optimal data structure: <strong>Hash map registry (RFID &rarr; household) + Max-Heap (bin fill priority)</strong></p>
+      <p class="why">Doorstep telemetry needs O(1) lookup against a citizen's compliance record the instant a truck scans a bin. Routing trucks across a ward needs the fullest bins served first &mdash; a max-heap (built from a min-heap with negated priority) gives that in O(log N) per push and pop, so the fleet always serves the worst saturation first instead of driving a fixed route past half-empty bins.</p>
+      <pre class="codeblock"><code>import time
+import heapq
+
+class HouseholdNode:
+    def __init__(self, rfid_id, property_tax_acc, baseline_compliance=1.0):
+        self.rfid_id = rfid_id
+        self.property_tax_acc = property_tax_acc
+        self.compliance_score = baseline_compliance  # Scale 0.0 to 1.0
+        self.wallet_tokens = 0
+
+class WasteLogisticsEngine:
+    def __init__(self):
+        self.citizen_registry = {}  # RFID -&gt; HouseholdNode
+        self.mrf_processing_queue = [] # Min-Heap tracking overfilled city bins
+
+    def register_household(self, node):
+        self.citizen_registry[node.rfid_id] = node
+
+    def scan_collection_telemetry(self, rfid_id, wet_weight_kg, dry_weight_kg, contamination_flag):
+        &quot;&quot;&quot;
+        Processes real-time collection metrics at the citizen doorstep.
+        &quot;&quot;&quot;
+        if rfid_id not in self.citizen_registry:
+            return {&quot;status&quot;: &quot;ERROR&quot;, &quot;msg&quot;: &quot;Unregistered RFID Signature&quot;}
+
+        citizen = self.citizen_registry[rfid_id]
+        total_weight = wet_weight_kg + dry_weight_kg
+
+        if contamination_flag:
+            # Drop compliance rating and trigger an automated municipal penalty
+            citizen.compliance_score = max(0.0, citizen.compliance_score - 0.2)
+            penalty_fee = 250.0  # Statutory fine in INR for unsegregated disposal
+            self._apply_tax_penalty(citizen.property_tax_acc, penalty_fee)
+            return {&quot;status&quot;: &quot;CONTAMINATED&quot;, &quot;action&quot;: &quot;Penalty Levied&quot;, &quot;fine_inr&quot;: penalty_fee}
+
+        else:
+            # Boost compliance score and award utility tokens for perfect sorting
+            citizen.compliance_score = min(1.0, citizen.compliance_score + 0.05)
+            earned_tokens = int(total_weight * 2)  # 2 Tokens per net kg of clean waste
+            citizen.wallet_tokens += earned_tokens
+            return {&quot;status&quot;: &quot;COMPLIANT&quot;, &quot;action&quot;: &quot;Tokens Disbursed&quot;, &quot;tokens_credited&quot;: earned_tokens}
+
+    def trigger_smart_bin_collection_route(self, bin_id, fill_percentage, location_coords):
+        &quot;&quot;&quot;
+        Uses a Min-Heap queue to optimize city logistics by routing trucks
+        exclusively to saturated bins, slashing diesel costs by 40%.
+        &quot;&quot;&quot;
+        # Negative prioritization to turn Min-Heap into Max-Heap for fill percentage
+        heapq.heappush(self.mrf_processing_queue, (-fill_percentage, {
+            &quot;bin_id&quot;: bin_id,
+            &quot;coords&quot;: location_coords
+        }))
+
+    def dispatch_optimized_trucks(self, vehicle_count):
+        dispatch_manifest = []
+        for _ in range(min(vehicle_count, len(self.mrf_processing_queue))):
+            highest_priority_bin = heapq.heappop(self.mrf_processing_queue)[1]
+            dispatch_manifest.append(highest_priority_bin)
+        return dispatch_manifest
+
+    def _apply_tax_penalty(self, account_id, amount):
+        print(f&quot;[BILLING API] Injected INR {amount} fine into property account: {account_id}&quot;)
+</code></pre>
+    </div>
+
+    <div class="eyebrow" style="margin-top:50px">The Zero-Landfill Transformation Matrix</div>
+    <p class="sec-intro">Shift the infrastructure away from manual dumping toward algorithmic collection, and every waste stream gets a processing vector and a buyer.</p>
+    <table class="matrix">
+      <thead>
+        <tr><th>Waste stream</th><th>Processing vector</th><th>Primary economic output</th><th>Providers (global &amp; local)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Biodegradable wet waste</strong></td><td>High-solids anaerobic biomethanation</td><td>Compressed Bio-CNG for transit + organic compost</td><td>Thermax India, Tata Projects, Suez Water Technologies</td></tr>
+        <tr><td><strong>Non-recyclable plastics</strong></td><td>High-velocity shredding, screening &amp; pyrolysis</td><td>Refuse-Derived Fuel for cement kilns</td><td>UltraTech Cement Operations, Dalmia Polypro</td></tr>
+        <tr><td><strong>City collection logistics</strong></td><td>Ultrasonic bin-level sensors + RFID telemetry</td><td>40% reduction in municipal truck diesel costs</td><td>Wipro IoT Solutions, Schneider Electric, Bosch IoT India</td></tr>
+        <tr><td><strong>E-waste &amp; strategic scrap</strong></td><td>Hydrometallurgical dismantling + optical sorting</td><td>Reclaimed rare-earth minerals, gold, copper, cobalt</td><td>Attero Recycling, Hulladek Recycling (West Bengal hub)</td></tr>
+      </tbody>
+    </table>
+
+    <blockquote class="press-quote">
+      Every saturated bin a truck visits without being routed there is diesel burned for nothing, and every unsegregated load that reaches an MRF is a recovery rate lost permanently. The heap and the RFID registry exist to make sure neither happens twice.
+      <cite>— BHP Solutions Desk</cite>
+    </blockquote>
+
+    <div class="press-contact">
+      Filed under: BHP Policy Vault &mdash; Annex A to White Paper No. 04<br>
+      <a href="zero-landfill-waste-engine.html">&larr; Back to White Paper No. 04</a><br>
+      <a href="index.html">&larr; Back to the Solutions Desk</a>
+    </div>
+
+    <div class="disclaimer" style="margin-top:40px">&#9888; SATIRE-ADJACENT POLICY DESK. Reference pseudocode only &mdash; not audited, not production-hardened, not a substitute for an actual engineering team. The BHP is not a registered party and fields no candidates, but the algorithms are free to steal.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">Better Hindu Party</div>
+      <div class="mono" style="font-size:.72rem;letter-spacing:.1em;margin-top:6px">Dharma over deal-making.</div>
+    </div>
+    <div class="fine">A work of satire and political comedy. No real party, no candidates, no donations, no affiliation with any organisation. All resemblance to actual policy hypocrisy is entirely the point.</div>
+  </div>
+</footer>
+
+</body>
+</html>
