@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHP Annex — Zero-Discretion Architecture for Passport Verification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Spectral:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="../index.html"><span class="glyph">卐̶</span>BETTER&nbsp;HINDU&nbsp;PARTY</a>
+    <nav>
+      <a href="../index.html#manifesto">Manifesto</a>
+      <a href="../index.html#join">Join</a>
+      <a href="../index.html#suggest">Suggest</a>
+      <a href="index.html">Solutions</a>
+      <a href="../press/viswakarma-exam-leak.html">Press</a>
+    </nav>
+  </div>
+</header>
+
+<section class="press">
+  <div class="wrap">
+    <div class="press-meta">BHP Policy Vault &middot; Annex A to White Paper No. 03 &middot; June 23, 2026 &middot; New Delhi</div>
+    <div class="eyebrow">BHP Solutions Desk &middot; Engineering Appendix</div>
+    <h1>Zero-Discretion Architecture for Passport Verification</h1>
+    <p class="dek">The &#8377;1,500 "chai-pani" bribe is <strong>discretionary corruption</strong>: it survives not because laws are missing, but because the manual process hands one officer a monopoly over <strong>time</strong> and <strong>approval</strong>. Refuse to pay, and the file gets delayed, the applicant gets summoned for repeat visits, or the residence gets falsely marked "not found." The fix is to delete the discretion, not lecture the officer.</p>
+
+    <article>
+      <p>Three systems do the work below, each mapped to a loophole named in <a href="passport-verification-fix.html">White Paper No. 03</a>. The code is reference logic showing the shape of the guardrail, not production code.</p>
+    </article>
+
+    <div class="demand">
+      <span class="stage-window">Loophole 1 &middot; Officers summoning applicants to the station instead of visiting home</span>
+      <h3>System 01: Proof-of-Presence via Ephemeral Geofencing</h3>
+      <p class="layer">Optimal data structure: <strong>Live coordinate pair, compared on submit</strong></p>
+      <p class="why">The verification app must lock the "Submit" action on the ledger unless the officer's live GPS coordinates match the applicant's registered residence within a strict 10-metre radius. Turning a home visit into a desk interview becomes structurally impossible, not just against policy.</p>
+      <p class="layer">Algorithm: <strong>Haversine Distance Gate</strong></p>
+      <pre class="codeblock"><code>import math
+
+def verify_officer_presence(officer_lat, officer_lon, applicant_lat, applicant_lon):
+    # Haversine formula to compute exact distance in meters
+    R = 6371000  # Radius of Earth in meters
+    phi1, phi2 = math.radians(officer_lat), math.radians(applicant_lat)
+    dphi = math.radians(applicant_lat - officer_lat)
+    dlambda = math.radians(applicant_lon - officer_lon)
+
+    a = math.sin(dphi/2)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda/2)**2
+    distance = R * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    # The System Barrier: If the officer isn't physically at your doorstep, the portal is locked.
+    if distance &lt;= 10.0:  # 10 Meters strict threshold
+        return "PORTAL_UNLOCKED: Ready for verification submission"
+    else:
+        return "ACCESS_DENIED: Verification must be performed at the applicant's registered residence"
+</code></pre>
+    </div>
+
+    <div class="demand">
+      <span class="stage-window">Loophole 2 &middot; Officers claiming documents are "unclear" or missing a seal</span>
+      <h3>System 02: Digital Locker Syncing</h3>
+      <p class="layer">Optimal data structure: <strong>Direct API sync against issuing government registries</strong></p>
+      <p class="why">Integrate the document check layer directly with <strong>DigiLocker</strong>. The moment an applicant files, birth certificates, degrees, and address proofs are fetched dynamically from the issuing registry rather than handed over as paper.</p>
+      <p class="why">Because the data is cryptographically pre-verified at the source, the field officer's job shrinks to a single physical identity confirmation &mdash; there is no surface left to claim a document is "invalid" or "unclear" for a price.</p>
+    </div>
+
+    <div class="demand">
+      <span class="stage-window">Loophole 3 &middot; Sitting on a file until the applicant gets desperate</span>
+      <h3>System 03: Starving the Delay Clock with Auto-Escalation</h3>
+      <p class="layer">Optimal data structure: <strong>FIFO Queue with a timestamped monitoring daemon</strong></p>
+      <p class="why">Every file enters a strict First-In-First-Out queue with a 7-day statutory clock. Once a file crosses day 7 without a system-logged legal flag (an active criminal-case match, say), the daemon escalates automatically &mdash; no officer has to ask for help, and none can quietly bury the request.</p>
+      <p class="layer">Algorithm: <strong>7-Day Idle-File Monitor</strong></p>
+      <pre class="codeblock"><code>import time
+
+class VerificationQueue:
+    def __init__(self):
+        self.queue = [] # Stores file logs: (timestamp, file_id, station_id)
+
+    def monitoring_daemon(self):
+        current_time = time.time()
+        seven_days_seconds = 7 * 24 * 60 * 60
+
+        for file in self.queue:
+            # Check if file age has crossed the 7-day statutory limit
+            if (current_time - file['timestamp']) > seven_days_seconds:
+                self.trigger_system_alert(file['file_id'], file['station_id'])
+
+    def trigger_system_alert(self, file_id, station_id):
+        # Auto-escalates past local desk to District SP and State Vigilance Bureau portals
+        print(f"[ALARM] File {file_id} at Station {station_id} has exceeded statutory timeline. Discretionary hold flagged.")
+</code></pre>
+    </div>
+
+    <div class="eyebrow" style="margin-top:50px">Structural Performance Matrix</div>
+    <table class="matrix">
+      <thead>
+        <tr><th>System</th><th>Primary data layer</th><th>Trigger</th><th>Loophole closed</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Geofence Gate</strong></td><td>Live GPS coordinate pair</td><td>Distance &gt; 10m on submit</td><td>Officer summoning applicant to the station</td></tr>
+        <tr><td><strong>2. DigiLocker Sync</strong></td><td>Government registry API</td><td>Document fetch on file open</td><td>"Unclear document" extortion</td></tr>
+        <tr><td><strong>3. FIFO Escalation Daemon</strong></td><td>Timestamped FIFO queue</td><td>Idle &gt; 7 days</td><td>Indefinite delay as leverage</td></tr>
+      </tbody>
+    </table>
+
+    <div class="eyebrow" style="margin-top:50px">Annex B</div>
+    <h2 class="sec" style="font-size:1.8rem">The Citizen Action Toolkit, <span class="it">for right now.</span></h2>
+    <p class="sec-intro">The systems above are the long-term fix. While states roll them out, existing central grievance channels already bypass the local officer entirely.</p>
+
+    <div class="demand">
+      <ul class="checklist">
+        <li><strong>File an instant central grievance.</strong> Passport Seva runs directly under the central Ministry of External Affairs. If an officer demands money, do not pay &mdash; file on <strong>CPGRAMS</strong> (the Centralised Public Grievance Redress and Monitoring System) or the Passport Seva Grievance page. These entries bypass the local state police chain completely and force a written explanation from the regional passport officer.</li>
+        <li><strong>Use the Digital Police Portal.</strong> Record the date, time, and name of the officer who summons you to a branch office instead of visiting your residence. File a digital complaint at <strong>digitalpolice.gov.in</strong> (Ministry of Home Affairs), which tracks citizen-service delays and retail corruption indicators nationally.</li>
+      </ul>
+    </div>
+
+    <blockquote class="press-quote">
+      Minor street corruption thrives on privacy and the absence of an audit trail. Moving the entire verification flow onto an open digital ledger, where every minute of delay is visible to someone above the local desk, is the single most efficient way to make "chai-pani" money structurally impossible to demand.
+      <cite>&mdash; BHP Solutions Desk</cite>
+    </blockquote>
+
+    <div class="press-contact">
+      Filed under: BHP Policy Vault &mdash; Annex A to White Paper No. 03<br>
+      <a href="passport-verification-fix.html">&larr; Back to White Paper No. 03</a><br>
+      <a href="index.html">&larr; Back to the Solutions Desk</a>
+    </div>
+
+    <div class="disclaimer" style="margin-top:40px">&#9888; SATIRE-ADJACENT POLICY DESK. Reference pseudocode only &mdash; not audited, not production-hardened, not a substitute for an actual engineering team. The BHP is not a registered party and fields no candidates, but the algorithms are free to steal.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">Better Hindu Party</div>
+      <div class="mono" style="font-size:.72rem;letter-spacing:.1em;margin-top:6px">Dharma over deal-making.</div>
+    </div>
+    <div class="fine">A work of satire and political comedy. No real party, no candidates, no donations, no affiliation with any organisation. All resemblance to actual policy hypocrisy is entirely the point.</div>
+  </div>
+</footer>
+
+</body>
+</html>
