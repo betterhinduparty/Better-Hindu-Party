@@ -176,4 +176,30 @@ blockquote.press-quote cite{display:block;margin-top:12px;font-style:normal;font
 .press-contact{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--ash);line-height:1.7}
 .press-contact a{color:var(--saffron-burn)}
 
+/* ---- solutions hub ---- */
+.problem-card{
+  display:grid;grid-template-columns:80px 1fr;gap:28px;
+  padding:34px 0;border-bottom:1px dashed var(--parchment-deep);
+}
+.problem-card .num{font-family:'Space Mono',monospace;font-size:2.4rem;font-weight:700;color:var(--saffron);line-height:1}
+.problem-card h3{font-size:1.4rem;font-weight:700;margin-bottom:8px}
+.problem-card h3 a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--saffron)}
+.problem-card h3 a:hover{color:var(--saffron-burn)}
+.problem-card .stat{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--saffron-burn);text-transform:uppercase;margin-bottom:8px;display:block}
+.problem-card p{color:var(--ink);opacity:.85;margin-bottom:10px}
+.readmore{font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.04em;color:var(--saffron-burn);text-decoration:none}
+.readmore:hover{text-decoration:underline}
+.queue{margin-top:10px;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--ash);line-height:1.8}
+.queue b{color:var(--ink)}
+@media(max-width:620px){.problem-card{grid-template-columns:1fr;gap:8px}.problem-card .num{font-size:1.8rem}}
+
+/* ---- white paper checklist ---- */
+.demand ul.checklist{list-style:none;margin:14px 0 0}
+.demand ul.checklist li{position:relative;padding-left:28px;margin-bottom:10px}
+.demand ul.checklist li::before{content:"☐";position:absolute;left:0;top:0;color:var(--saffron-burn);font-size:1.05em}
+.demand ul.checklist ul{list-style:none;margin:8px 0 0 4px}
+.demand ul.checklist ul li{padding-left:24px;font-size:.94rem;opacity:.85;margin-bottom:6px}
+.demand ul.checklist ul li::before{content:"–";color:var(--ash)}
+.stage-window{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--saffron-burn);text-transform:uppercase;display:block;margin-bottom:4px}
+
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
