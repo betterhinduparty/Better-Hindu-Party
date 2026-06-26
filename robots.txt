@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /press/viswakarma-exam-leak-card.html
+
+Sitemap: https://betterhinduparty.github.io/Better-Hindu-Party/sitemap.xml

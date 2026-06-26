@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Better Hindu Party — Dharma Over Deal-Making</title>
+<meta name="description" content="A satirical party that holds every establishment to its own stated values — so literally that every deal, defection, and exam leak looks exactly like the Adharma it claims to oppose.">
+<link rel="canonical" href="https://betterhinduparty.github.io/Better-Hindu-Party/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Better Hindu Party — Dharma Over Deal-Making">
+<meta property="og:description" content="A satirical party that holds every establishment to its own stated values — so literally that every deal, defection, and exam leak looks exactly like the Adharma it claims to oppose.">
+<meta property="og:url" content="https://betterhinduparty.github.io/Better-Hindu-Party/">
+<meta property="og:image" content="https://betterhinduparty.github.io/Better-Hindu-Party/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Better Hindu Party — Dharma Over Deal-Making">
+<meta name="twitter:description" content="A satirical party that holds every establishment to its own stated values — so literally that every deal, defection, and exam leak looks exactly like the Adharma it claims to oppose.">
+<meta name="twitter:image" content="https://betterhinduparty.github.io/Better-Hindu-Party/og-image.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="shortcut icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://docs.google.com">
@@ -11,6 +29,8 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="bhp-mark" viewBox="0 0 200 200">
@@ -30,8 +50,9 @@
 
 <header class="bar">
   <div class="wrap">
-    <div class="logo"><span class="glyph">卐̶</span>BETTER&nbsp;HINDU&nbsp;PARTY</div>
-    <nav>
+    <div class="logo"><span class="glyph" aria-hidden="true">卐̶</span>BETTER&nbsp;HINDU&nbsp;PARTY</div>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav"><span></span></button>
+    <nav aria-label="Primary" id="primary-nav">
       <a href="#manifesto">Manifesto</a>
       <a href="#meter">Meter</a>
       <a href="#join">Join</a>
@@ -41,6 +62,7 @@
     </nav>
   </div>
 </header>
+<main id="main">
 
 <section class="hero">
   <div class="wrap">
@@ -115,7 +137,7 @@
       <span class="ameter-star" style="bottom:26px;right:16px">✱</span>
 
       <div class="ameter-top">
-        <div class="ameter-badge"><svg viewBox="0 0 200 200" width="40" height="40"><use href="#bhp-mark"/></svg></div>
+        <div class="ameter-badge"><svg viewBox="0 0 200 200" width="40" height="40" aria-hidden="true"><use href="#bhp-mark"/></svg></div>
         <div class="ameter-lbl"><b>ADHARMA METER</b>RAPID RESPONSE · BHP</div>
         <div class="ameter-live">● LIVE</div>
       </div>
@@ -123,7 +145,7 @@
       <div class="ameter-headline-wrap"><h3 id="ameter-headline">MLA JUMPS SHIP</h3></div>
 
       <div class="ameter-gauge-wrap">
-        <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <g fill="none" stroke-linecap="round" stroke-width="22">
             <path d="M40 150 A110 110 0 0 1 96 58" stroke="#3FBF6F"/>
             <path d="M96 58 A110 110 0 0 1 204 58" stroke="#FFE03A"/>
@@ -188,10 +210,12 @@
     <p class="sec-intro">A real intake form. Submissions go to a spreadsheet only the BHP Central Committee can see — which is to say, the satire account that made this site.</p>
 
     <div class="form-embed">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfyFNQNjjplRVH7UDsVZSaoAbIL-JJ1uyaWa2Fg4Z0YqCcOVg/viewform?embedded=true">Loading…</iframe>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfyFNQNjjplRVH7UDsVZSaoAbIL-JJ1uyaWa2Fg4Z0YqCcOVg/viewform?embedded=true" title="BHP Suggestion Form">Loading…</iframe>
     </div>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="wrap">
@@ -232,5 +256,7 @@
     }, 4500);
   })();
 </script>
+<button class="back-to-top" aria-label="Back to top">&uarr;</button>
+<script src="site.js"></script>
 </body>
 </html>
